@@ -1,4 +1,4 @@
 .page {
-    padding: 100px;
+    padding: 100px var(--side-padding);
     background-color: burlywood;
 }

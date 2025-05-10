@@ -1,0 +1,10 @@
+:root {
+    --content-max-width: 900px;
+    --side-padding: calc(max(15px, (100% - var(--content-max-width)) / 2));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
