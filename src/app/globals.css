@@ -1,4 +1,28 @@
 :root {
+    /* ---------- 1) Primitive palette ---------- */
+    --clr-neutral-900: #533;
+    --clr-neutral-50: #f4f1ed;
+
+    --clr-blue-500: #057beb;
+    --clr-red-600: #e21b1b;
+    --clr-yellow-400: #f3e047;
+    --clr-amber-500: #d49c42;
+
+    /* ---------- 2) Semantic tokens ---------- */
+    --color-text: var(--clr-neutral-900);
+    --color-bg: var(--clr-neutral-50);
+
+    --color-apple-bg-selected: var(--clr-blue-500);
+    --color-apple-icon: var(--clr-red-600);
+    --color-apple-icon-selected: var(--clr-yellow-400);
+
+    --color-board-border: var(--clr-amber-500);
+    --color-board-bg: var(--clr-yellow-400);
+
+    --color-progress-bg: var(--clr-neutral-900);
+    --color-button-bg: var(--clr-neutral-900);
+
+    /* variables */
     --content-max-width: 900px;
     --side-padding: calc(max(15px, (100% - var(--content-max-width)) / 2));
 }
