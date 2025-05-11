@@ -398,7 +398,7 @@ export default class AppleGameBoard extends HTMLElement {
   }
 
   refresh() {
-    if (this.refreshUsed) return;
+    if (!this.playing || this.refreshUsed) return;
 
     this.resetApples();
 
