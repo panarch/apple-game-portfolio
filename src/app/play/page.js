@@ -4,6 +4,7 @@ export default function Play() {
   return (
     <main className={styles.page}>
       <h1>Game Play</h1>
+      <apple-game-board />
     </main>
   );
 }

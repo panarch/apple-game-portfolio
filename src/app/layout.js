@@ -11,6 +11,9 @@ const galindo = Galindo({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script src="/game.js" defer type="module"></script>
+      </head>
       <body className={galindo.variable}>
         <Header />
         {children}
