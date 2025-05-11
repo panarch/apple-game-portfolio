@@ -122,6 +122,7 @@ export default class AppleGameBoard extends HTMLElement {
 
           grid-area: board;
 
+          position: relative;
           padding: var(--padding);
           background-color: var(--color-board-bg);
           border: var(--border) solid var(--color-board-border);
@@ -181,10 +182,30 @@ export default class AppleGameBoard extends HTMLElement {
               transition: opacity 300ms;
             }
           }
+
+          .final-score {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 200px;
+          }
         }
 
         .board.playing {
           cursor: crosshair;
+
+          .final-score {
+            opacity: 0;
+            transform: scale(0);
+            z-index: -1;
+          }
         }
 
         .board:not(.playing) {
@@ -194,6 +215,13 @@ export default class AppleGameBoard extends HTMLElement {
 
           span {
             opacity: 0;
+          }
+
+          .final-score {
+            opacity: 1;
+            transform: scale(1);
+            transition: transform 400ms;
+            z-index: 2;
           }
         }
       </style>
@@ -245,13 +273,16 @@ export default class AppleGameBoard extends HTMLElement {
         <button class="refresh">
           <img src="/refresh.png" />
         </button>
-        <div class="board"></div>
+        <div class="board">
+          <h2 class="final-score"></h2>
+        </div>
       </div>
     `;
 
     this.$board = this.$root.querySelector(".board");
     this.$appleIcon = this.$root.querySelector("#apple-icon").content;
     this.$score = this.$root.querySelector(".score > span");
+    this.$finalScore = this.$root.querySelector(".final-score");
     this.$refresh = this.$root.querySelector(".refresh");
     this.$progress = this.$root.querySelector(".progress > div");
 
@@ -307,6 +338,7 @@ export default class AppleGameBoard extends HTMLElement {
     this.$board.classList.add("playing");
     this.$progress.classList.add("playing");
     this.$score.textContent = this.score;
+    this.$finalScore.textContent = "";
     this.$refresh.removeAttribute("disabled");
 
     this.resetApples();
@@ -321,6 +353,7 @@ export default class AppleGameBoard extends HTMLElement {
     this.timerId = null;
 
     this.$board.classList.remove("playing");
+    this.$finalScore.textContent = this.score;
   }
 
   dragBegin(e, row, col) {
