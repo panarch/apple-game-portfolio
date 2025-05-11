@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
+import { useRanking } from "../store";
 
 export default function Play() {
+  const { addRecord } = useRanking();
   const [playing, setPlaying] = useState(false);
   const ref = useRef(null);
 
@@ -16,13 +18,17 @@ export default function Play() {
     setPlaying((v) => !v);
   }
 
-  function gameover() {
-    setPlaying(false);
-  }
+  const gameover = useCallback(
+    (e) => {
+      addRecord(e.detail);
+      setPlaying(false);
+    },
+    [addRecord],
+  );
 
   useEffect(() => {
     ref.current.addEventListener("gameover", gameover);
-  }, []);
+  }, [gameover]);
 
   return (
     <main className={styles.page}>

@@ -1,6 +1,7 @@
 import { Galindo } from "next/font/google";
 import Header from "./components/Header";
 import "./globals.css";
+import { RankingProvider } from "./store";
 
 const galindo = Galindo({
   variable: "--font-galindo",
@@ -16,7 +17,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={galindo.variable}>
         <Header />
-        {children}
+        <RankingProvider>{children}</RankingProvider>
       </body>
     </html>
   );

@@ -12,7 +12,7 @@ export default class AppleGameBoard extends HTMLElement {
         :host {
           --num-rows: 8;
           --num-cols: 11;
-          --duration: 15;
+          --duration: 10;
         }
 
         * {
@@ -367,7 +367,14 @@ export default class AppleGameBoard extends HTMLElement {
     this.$board.classList.remove("playing");
     this.$finalScore.textContent = this.score;
 
-    this.dispatchEvent(new CustomEvent("gameover"));
+    this.dispatchEvent(
+      new CustomEvent("gameover", {
+        detail: {
+          score: this.score,
+          date: new Date(),
+        },
+      }),
+    );
   }
 
   dragBegin(e, row, col) {
