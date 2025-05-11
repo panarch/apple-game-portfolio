@@ -30,7 +30,7 @@ export default function Randking() {
               <td>{i + 1}</td>
               <td>{score}</td>
               <td></td>
-              <td>{dateFmt.format(date)}</td>
+              <td>{dateFmt.format(new Date(date))}</td>
               <td>
                 <button>Show</button>
               </td>
