@@ -18,6 +18,12 @@ export default class AppleGameBoard extends HTMLElement {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
+
+          touch-action: none;
+          user-select: none;
+          -webkit-user-drag: none;
+          -webkit-user-select: none;
+          -webkit-touch-callout: none;
         }
 
         .container {
@@ -109,6 +115,7 @@ export default class AppleGameBoard extends HTMLElement {
           background-color: var(--color-board-bg);
           border: var(--border) solid var(--color-board-border);
           border-radius: 12px;
+          cursor: crosshair;
 
           display: grid;
           grid-template-rows: repeat(var(--num-rows), var(--apple-size));
@@ -134,6 +141,18 @@ export default class AppleGameBoard extends HTMLElement {
               display: flex;
               align-items: center;
               justify-content: center;
+            }
+          }
+
+          .apple.selected {
+            background-color: var(--color-apple-bg-selected);
+
+            path {
+              fill: var(--color-apple-icon-selected);
+            }
+
+            span {
+              color: var(--color-text);
             }
           }
         }
@@ -197,6 +216,12 @@ export default class AppleGameBoard extends HTMLElement {
     this.numRows = styles.getPropertyValue("--num-rows");
     this.numCols = styles.getPropertyValue("--num-cols");
 
+    // variables
+    this.$apples = [];
+    this.dragging = false;
+    this.pos1 = null; // [row, col]
+    this.pos2 = null; // [row, col]
+
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
         const $apple = document.createElement("div");
@@ -206,9 +231,75 @@ export default class AppleGameBoard extends HTMLElement {
         const $number = document.createElement("span");
         $number.textContent = Math.floor(Math.random() * 9) + 1;
 
+        $apple.addEventListener("mousedown", (e) => {
+          this.dragBegin(e, row, col);
+        });
+        $apple.addEventListener("mousemove", (e) => {
+          this.dragMove(e, row, col);
+        });
+        $apple.addEventListener("mouseup", () => this.dragEnd());
+
         $apple.appendChild($icon);
         $apple.appendChild($number);
         this.$board.appendChild($apple);
+        this.$apples.push($apple);
+      }
+    }
+
+    document.addEventListener("mousemove", () => this.dragEnd());
+  }
+
+  dragBegin(e, row, col) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    this.dragging = true;
+    this.pos1 = [row, col];
+    this.pos2 = [row, col];
+
+    this.drawSelection();
+  }
+
+  dragMove(e, row, col) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    if (!this.dragging) return;
+
+    this.pos2 = [row, col];
+    this.drawSelection();
+  }
+
+  dragEnd() {
+    this.dragging = false;
+
+    this.pos1 = null;
+    this.pos2 = null;
+    this.clearSelection();
+  }
+
+  clearSelection() {
+    for (const $apple of this.$board.querySelectorAll(".apple.selected")) {
+      $apple.classList.remove("selected");
+    }
+  }
+
+  drawSelection() {
+    this.clearSelection();
+
+    const minRow = Math.min(this.pos1[0], this.pos2[0]);
+    const maxRow = Math.max(this.pos1[0], this.pos2[0]);
+    const minCol = Math.min(this.pos1[1], this.pos2[1]);
+    const maxCol = Math.max(this.pos1[1], this.pos2[1]);
+
+    for (let row = minRow; row <= maxRow; row++) {
+      for (let col = minCol; col <= maxCol; col++) {
+        const $apple = this.$apples[row * this.numCols + col];
+        $apple.classList.add("selected");
       }
     }
   }
