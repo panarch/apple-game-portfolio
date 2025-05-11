@@ -326,8 +326,6 @@ export default class AppleGameBoard extends HTMLElement {
 
     document.addEventListener("mousemove", () => this.dragEnd());
     this.$refresh.addEventListener("click", () => this.refresh());
-
-    setTimeout(() => this.start(), 2000);
   }
 
   start() {
@@ -336,6 +334,8 @@ export default class AppleGameBoard extends HTMLElement {
     this.score = 0;
 
     this.$board.classList.add("playing");
+    this.$progress.classList.remove("playing");
+    this.$progress.offsetHeight;
     this.$progress.classList.add("playing");
     this.$score.textContent = this.score;
     this.$finalScore.textContent = "";
@@ -346,6 +346,18 @@ export default class AppleGameBoard extends HTMLElement {
     this.timerId = setTimeout(() => this.gameover(), this.duration * 1000);
   }
 
+  stop() {
+    this.playing = false;
+
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+      this.timerId = null;
+    }
+
+    this.$board.classList.remove("playing");
+    this.$progress.classList.remove("playing");
+  }
+
   gameover() {
     this.dragEnd();
 
@@ -354,6 +366,8 @@ export default class AppleGameBoard extends HTMLElement {
 
     this.$board.classList.remove("playing");
     this.$finalScore.textContent = this.score;
+
+    this.dispatchEvent(new CustomEvent("gameover"));
   }
 
   dragBegin(e, row, col) {
