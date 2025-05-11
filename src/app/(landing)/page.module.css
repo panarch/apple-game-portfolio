@@ -1,5 +1,37 @@
 .page {
     width: 100%;
-    padding: 100px var(--side-padding);
-    background-color: burlywood;
+    padding: 10px var(--side-padding);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1,
+    h2 {
+        padding: 15px 0;
+    }
+
+    h3 {
+        padding: 10px 0;
+    }
+
+    .play {
+        padding: 16px;
+        font-size: 24px;
+        border-radius: 12px;
+        background-color: var(--color-landing-play-bg);
+        color: var(--color-landing-play-text);
+        text-decoration: none;
+    }
+
+    section {
+        padding: 50px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    section:first-child {
+        padding-top: 0;
+    }
 }
