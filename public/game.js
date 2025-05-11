@@ -100,6 +100,11 @@ export default class AppleGameBoard extends HTMLElement {
           }
         }
 
+        .refresh[disabled] {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
         .board {
           --padding: 5px;
           --border: 8px;
@@ -228,6 +233,7 @@ export default class AppleGameBoard extends HTMLElement {
     this.$board = this.$root.querySelector(".board");
     this.$appleIcon = this.$root.querySelector("#apple-icon").content;
     this.$score = this.$root.querySelector(".score > span");
+    this.$refresh = this.$root.querySelector(".refresh");
 
     const styles = window.getComputedStyle(this.$board);
     this.numRows = styles.getPropertyValue("--num-rows");
@@ -239,6 +245,7 @@ export default class AppleGameBoard extends HTMLElement {
     this.pos1 = null; // [row, col]
     this.pos2 = null; // [row, col]
     this.score = 0;
+    this.refreshUsed = false;
 
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
@@ -265,6 +272,7 @@ export default class AppleGameBoard extends HTMLElement {
     }
 
     document.addEventListener("mousemove", () => this.dragEnd());
+    this.$refresh.addEventListener("click", () => this.refresh());
   }
 
   dragBegin(e, row, col) {
@@ -300,6 +308,19 @@ export default class AppleGameBoard extends HTMLElement {
     this.pos1 = null;
     this.pos2 = null;
     this.clearSelection();
+  }
+
+  refresh() {
+    if (this.refreshUsed) return;
+
+    for (const $apple of this.$apples) {
+      $apple.className = "apple";
+      const $number = $apple.querySelector("span");
+      $number.textContent = Math.floor(Math.random() * 9) + 1;
+    }
+
+    this.refreshUsed = true;
+    this.$refresh.setAttribute("disabled", "");
   }
 
   collect() {
