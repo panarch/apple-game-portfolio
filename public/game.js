@@ -12,6 +12,7 @@ export default class AppleGameBoard extends HTMLElement {
         :host {
           --num-rows: 8;
           --num-cols: 11;
+          --duration: 15;
         }
 
         * {
@@ -79,8 +80,13 @@ export default class AppleGameBoard extends HTMLElement {
             height: 100%;
             background-color: var(--color-progress-thumb);
 
-            transform: scaleX(0.6);
+            transform: scaleX(1);
             transform-origin: top left;
+          }
+
+          div.playing {
+            transform: scaleX(0);
+            transition: transform calc(var(--duration) * 1s) linear;
           }
         }
 
@@ -120,7 +126,6 @@ export default class AppleGameBoard extends HTMLElement {
           background-color: var(--color-board-bg);
           border: var(--border) solid var(--color-board-border);
           border-radius: 12px;
-          cursor: crosshair;
 
           display: grid;
           grid-template-rows: repeat(var(--num-rows), var(--apple-size));
@@ -175,6 +180,20 @@ export default class AppleGameBoard extends HTMLElement {
               opacity: 0;
               transition: opacity 300ms;
             }
+          }
+        }
+
+        .board.playing {
+          cursor: crosshair;
+        }
+
+        .board:not(.playing) {
+          .apple:not(.collected) {
+            opacity: 0.7;
+          }
+
+          span {
+            opacity: 0;
           }
         }
       </style>
@@ -234,10 +253,12 @@ export default class AppleGameBoard extends HTMLElement {
     this.$appleIcon = this.$root.querySelector("#apple-icon").content;
     this.$score = this.$root.querySelector(".score > span");
     this.$refresh = this.$root.querySelector(".refresh");
+    this.$progress = this.$root.querySelector(".progress > div");
 
     const styles = window.getComputedStyle(this.$board);
     this.numRows = styles.getPropertyValue("--num-rows");
     this.numCols = styles.getPropertyValue("--num-cols");
+    this.duration = styles.getPropertyValue("--duration");
 
     // variables
     this.$apples = [];
@@ -246,6 +267,8 @@ export default class AppleGameBoard extends HTMLElement {
     this.pos2 = null; // [row, col]
     this.score = 0;
     this.refreshUsed = false;
+    this.playing = false;
+    this.timerId = null;
 
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
@@ -254,7 +277,6 @@ export default class AppleGameBoard extends HTMLElement {
 
         const $icon = this.$appleIcon.cloneNode(true);
         const $number = document.createElement("span");
-        $number.textContent = Math.floor(Math.random() * 9) + 1;
 
         $apple.addEventListener("mousedown", (e) => {
           this.dragBegin(e, row, col);
@@ -273,9 +295,37 @@ export default class AppleGameBoard extends HTMLElement {
 
     document.addEventListener("mousemove", () => this.dragEnd());
     this.$refresh.addEventListener("click", () => this.refresh());
+
+    setTimeout(() => this.start(), 2000);
+  }
+
+  start() {
+    this.playing = true;
+    this.refreshUsed = false;
+    this.score = 0;
+
+    this.$board.classList.add("playing");
+    this.$progress.classList.add("playing");
+    this.$score.textContent = this.score;
+    this.$refresh.removeAttribute("disabled");
+
+    this.resetApples();
+
+    this.timerId = setTimeout(() => this.gameover(), this.duration * 1000);
+  }
+
+  gameover() {
+    this.dragEnd();
+
+    this.playing = false;
+    this.timerId = null;
+
+    this.$board.classList.remove("playing");
   }
 
   dragBegin(e, row, col) {
+    if (!this.playing) return;
+
     if (e) {
       e.stopPropagation();
       e.preventDefault();
@@ -289,6 +339,8 @@ export default class AppleGameBoard extends HTMLElement {
   }
 
   dragMove(e, row, col) {
+    if (!this.playing) return;
+
     if (e) {
       e.stopPropagation();
       e.preventDefault();
@@ -301,6 +353,8 @@ export default class AppleGameBoard extends HTMLElement {
   }
 
   dragEnd() {
+    if (!this.playing || !this.dragging) return;
+
     this.dragging = false;
 
     this.collect();
@@ -313,14 +367,18 @@ export default class AppleGameBoard extends HTMLElement {
   refresh() {
     if (this.refreshUsed) return;
 
+    this.resetApples();
+
+    this.refreshUsed = true;
+    this.$refresh.setAttribute("disabled", "");
+  }
+
+  resetApples() {
     for (const $apple of this.$apples) {
       $apple.className = "apple";
       const $number = $apple.querySelector("span");
       $number.textContent = Math.floor(Math.random() * 9) + 1;
     }
-
-    this.refreshUsed = true;
-    this.$refresh.setAttribute("disabled", "");
   }
 
   collect() {
