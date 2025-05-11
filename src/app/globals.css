@@ -21,9 +21,13 @@
 
     --color-progress-bg: var(--clr-neutral-900);
     --color-button-bg: var(--clr-neutral-900);
+    --color-button-text: var(--clr-neutral-50);
 
     --color-landing-play-bg: var(--clr-red-600);
     --color-landing-play-text: var(--clr-neutral-50);
+
+    --color-table-header-bg: var(--clr-neutral-900);
+    --color-table-header-text: var(--clr-neutral-50);
 
     /* variables */
     --content-max-width: 900px;

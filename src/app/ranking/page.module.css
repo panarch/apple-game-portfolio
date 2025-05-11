@@ -1,4 +1,44 @@
 .page {
-    padding: 100px var(--side-padding);
-    background-color: darkgray;
+    width: 100%;
+    padding: 30px var(--side-padding);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+
+    table {
+        width: 100%;
+        max-width: 600px;
+
+        background-color: var(--color-board-bg);
+        border: 8px solid var(--color-board-border);
+        border-radius: 12px;
+        border-spacing: 0;
+        overflow: hidden;
+
+        th,
+        td {
+            padding: 5px;
+            border: none;
+        }
+
+        th {
+            background-color: var(--color-table-header-bg);
+            color: var(--color-table-header-text);
+        }
+
+        td {
+            text-align: center;
+        }
+
+        button {
+            border: none;
+            background-color: var(--color-button-bg);
+            color: var(--color-button-text);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
 }
