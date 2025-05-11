@@ -213,7 +213,7 @@ export default class AppleGameBoard extends HTMLElement {
               d="M360.196,109.621c-55.927,2.03-87.668,36.526-104.171,36.526s-48.244-34.496-104.171-36.526	C95.928,107.591,0.021,149.728,0.021,279.254S104.209,512,157.549,512s71.915-15.163,98.451-15.163S301.085,512,354.451,512	s157.528-103.227,157.528-232.746S416.123,107.591,360.196,109.621z"
             />
           </svg>
-          <span>100</span>
+          <span>0</span>
         </div>
         <div class="progress">
           <div></div>
@@ -227,6 +227,7 @@ export default class AppleGameBoard extends HTMLElement {
 
     this.$board = this.$root.querySelector(".board");
     this.$appleIcon = this.$root.querySelector("#apple-icon").content;
+    this.$score = this.$root.querySelector(".score > span");
 
     const styles = window.getComputedStyle(this.$board);
     this.numRows = styles.getPropertyValue("--num-rows");
@@ -237,6 +238,7 @@ export default class AppleGameBoard extends HTMLElement {
     this.dragging = false;
     this.pos1 = null; // [row, col]
     this.pos2 = null; // [row, col]
+    this.score = 0;
 
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
@@ -316,6 +318,9 @@ export default class AppleGameBoard extends HTMLElement {
     for (const $apple of $selectedApples) {
       $apple.classList.add("collected");
     }
+
+    this.score += $selectedApples.length;
+    this.$score.textContent = this.score;
   }
 
   clearSelection() {
