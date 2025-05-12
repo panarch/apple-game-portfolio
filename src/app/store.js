@@ -1,5 +1,6 @@
 "use client";
 
+import { compressToEncodedURIComponent } from "lz-string";
 import {
   createContext,
   useCallback,
@@ -10,7 +11,7 @@ import {
 
 const RankingContext = createContext(null);
 
-const VERSION = "4";
+const VERSION = "5";
 
 export function RankingProvider({ children }) {
   const [ranks, setRanks] = useState([]);
@@ -33,6 +34,9 @@ export function RankingProvider({ children }) {
 
   const addRecord = useCallback((record) => {
     record.dragCount = record.replay.logs.filter((log) => !log.refresh).length;
+    record.replay = compressToEncodedURIComponent(
+      JSON.stringify(record.replay),
+    );
 
     setRanks((prev) =>
       [record, ...prev]

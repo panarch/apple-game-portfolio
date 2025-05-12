@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import styles from "./replaymodal.module.css";
+import { decompressFromEncodedURIComponent } from "lz-string";
 
 export default function ReplayModal({ replayData, onClose }) {
   const ref = useRef(null);
@@ -9,8 +10,9 @@ export default function ReplayModal({ replayData, onClose }) {
   useEffect(() => {
     if (!replayData) return;
 
+    const data = JSON.parse(decompressFromEncodedURIComponent(replayData));
     const timerId = setTimeout(() => {
-      ref.current.replay(replayData);
+      ref.current.replay(data);
     }, 1000);
 
     return () => clearTimeout(timerId);
