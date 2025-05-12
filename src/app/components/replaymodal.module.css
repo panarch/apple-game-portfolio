@@ -17,9 +17,9 @@
 
         display: grid;
         grid-template-areas:
-            "title close"
-            "board board";
-        grid-template-columns: 1fr max-content;
+            "title share close"
+            "board board board";
+        grid-template-columns: 1fr max-content max-content;
         gap: 20px;
     }
 
@@ -27,8 +27,15 @@
         grid-area: title;
     }
 
+    .share {
+        grid-area: share;
+    }
+
     .close {
         grid-area: close;
+    }
+
+    button {
         padding: 5px 10px;
         font-size: 20px;
         background-color: var(--color-button-bg);

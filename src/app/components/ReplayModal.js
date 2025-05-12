@@ -18,10 +18,20 @@ export default function ReplayModal({ replayData, onClose }) {
     return () => clearTimeout(timerId);
   }, [replayData]);
 
+  async function share() {
+    const url = `${window.location.origin}/?replay=${replayData}`;
+
+    await navigator.clipboard.writeText(url);
+    window.alert("Replay link copied to clipboard! ✅");
+  }
+
   return (
     <div className={styles.modal}>
       <div className={styles.content}>
         <h1 className={styles.title}>Replay</h1>
+        <button className={styles.share} onClick={share}>
+          Share
+        </button>
         <button className={styles.close} onClick={onClose}>
           Close
         </button>
