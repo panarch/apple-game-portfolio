@@ -10,7 +10,7 @@ import {
 
 const RankingContext = createContext(null);
 
-const VERSION = "3";
+const VERSION = "4";
 
 export function RankingProvider({ children }) {
   const [ranks, setRanks] = useState([]);
@@ -32,11 +32,16 @@ export function RankingProvider({ children }) {
   }, [ranks]);
 
   const addRecord = useCallback((record) => {
+    record.dragCount = record.replay.logs.filter((log) => !log.refresh).length;
+
     setRanks((prev) =>
       [record, ...prev]
         .sort((a, b) => {
           const ds = b.score - a.score;
           if (ds !== 0) return ds;
+
+          const dd = a.dragCount - b.dragCount;
+          if (dd !== 0) return dd;
 
           return new Date(a.date) - new Date(b.date);
         })

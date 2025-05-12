@@ -25,11 +25,11 @@ export default function Randking() {
           </tr>
         </thead>
         <tbody>
-          {ranks.map(({ score, date }, i) => (
+          {ranks.map(({ score, dragCount, date }, i) => (
             <tr key={`rank-${i}`}>
               <td>{i + 1}</td>
               <td>{score}</td>
-              <td></td>
+              <td>{dragCount}</td>
               <td>{dateFmt.format(new Date(date))}</td>
               <td>
                 <button>Show</button>
