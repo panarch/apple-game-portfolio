@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const RankingContext = createContext(null);
 
@@ -25,7 +31,7 @@ export function RankingProvider({ children }) {
     localStorage.setItem("ranks", JSON.stringify(ranks));
   }, [ranks]);
 
-  function addRecord(record) {
+  const addRecord = useCallback((record) => {
     setRanks((prev) =>
       [record, ...prev]
         .sort((a, b) => {
@@ -36,7 +42,7 @@ export function RankingProvider({ children }) {
         })
         .slice(0, 10),
     );
-  }
+  }, []);
 
   return (
     <RankingContext.Provider value={{ ranks, addRecord }}>
