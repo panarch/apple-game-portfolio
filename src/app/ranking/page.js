@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import ReplayModal from "../components/ReplayModal";
 import { useRanking } from "../store";
 import styles from "./page.module.css";
 
@@ -10,6 +12,7 @@ const dateFmt = new Intl.DateTimeFormat("en-US", {
 
 export default function Randking() {
   const { ranks } = useRanking();
+  const [replayData, setReplayData] = useState(null);
 
   return (
     <main className={styles.page}>
@@ -25,14 +28,14 @@ export default function Randking() {
           </tr>
         </thead>
         <tbody>
-          {ranks.map(({ score, dragCount, date }, i) => (
+          {ranks.map(({ score, dragCount, date, replay }, i) => (
             <tr key={`rank-${i}`}>
               <td>{i + 1}</td>
               <td>{score}</td>
               <td>{dragCount}</td>
               <td>{dateFmt.format(new Date(date))}</td>
               <td>
-                <button>Show</button>
+                <button onClick={() => setReplayData(replay)}>Show</button>
               </td>
             </tr>
           ))}
@@ -49,6 +52,12 @@ export default function Randking() {
             ))}
         </tbody>
       </table>
+      {replayData && (
+        <ReplayModal
+          replayData={replayData}
+          onClose={() => setReplayData(null)}
+        />
+      )}
     </main>
   );
 }
