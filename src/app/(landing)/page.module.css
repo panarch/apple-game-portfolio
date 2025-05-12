@@ -9,10 +9,20 @@
     h1,
     h2 {
         padding: 15px 0;
+        text-align: center;
     }
 
     h3 {
         padding: 10px 0;
+        text-align: center;
+    }
+
+    @media (max-width: 640px) {
+        li {
+            padding: 5px 0;
+            list-style: none;
+            text-align: center;
+        }
     }
 
     .play {

@@ -120,6 +120,10 @@ export default class AppleGameBoard extends HTMLElement {
           );
           --apple-size: calc(var(--board-inner-width) / var(--num-cols));
 
+          @media (max-width: 640px) {
+            --board-width: calc(100vw - 10px);
+          }
+
           grid-area: board;
 
           position: relative;
