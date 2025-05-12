@@ -12,7 +12,7 @@ export default class AppleGameBoard extends HTMLElement {
         :host {
           --num-rows: 8;
           --num-cols: 11;
-          --duration: 10;
+          --duration: 75;
         }
 
         * {

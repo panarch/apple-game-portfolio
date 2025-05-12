@@ -11,7 +11,7 @@ import {
 
 const RankingContext = createContext(null);
 
-const VERSION = "5";
+const VERSION = "6";
 
 export function RankingProvider({ children }) {
   const [ranks, setRanks] = useState([]);
