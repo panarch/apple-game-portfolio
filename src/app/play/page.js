@@ -20,9 +20,14 @@ export default function Play() {
 
   const gameover = useCallback(
     (e) => {
-      console.log("gameover", e.detail);
       addRecord(e.detail);
       setPlaying(false);
+
+      setTimeout(() => {
+        console.log("start replay :D");
+
+        ref.current.replay(e.detail.replay);
+      }, 2000);
     },
     [addRecord],
   );
