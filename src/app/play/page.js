@@ -20,6 +20,7 @@ export default function Play() {
 
   const gameover = useCallback(
     (e) => {
+      console.log("gameover", e.detail);
       addRecord(e.detail);
       setPlaying(false);
     },

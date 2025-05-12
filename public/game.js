@@ -301,6 +301,11 @@ export default class AppleGameBoard extends HTMLElement {
     this.playing = false;
     this.timerId = null;
 
+    this.startTime = null;
+    this.logs = null; // [{ pos1, pos2, time } | { refresh, time }]
+    this.board1 = null;
+    this.board2 = null;
+
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
         const $apple = document.createElement("div");
@@ -333,6 +338,11 @@ export default class AppleGameBoard extends HTMLElement {
     this.refreshUsed = false;
     this.score = 0;
 
+    this.startTime = new Date();
+    this.logs = [];
+    this.board1 = this.resetApples();
+    this.board2 = null;
+
     this.$board.classList.add("playing");
     this.$progress.classList.remove("playing");
     this.$progress.offsetHeight;
@@ -340,8 +350,6 @@ export default class AppleGameBoard extends HTMLElement {
     this.$score.textContent = this.score;
     this.$finalScore.textContent = "";
     this.$refresh.removeAttribute("disabled");
-
-    this.resetApples();
 
     this.timerId = setTimeout(() => this.gameover(), this.duration * 1000);
   }
@@ -372,6 +380,11 @@ export default class AppleGameBoard extends HTMLElement {
         detail: {
           score: this.score,
           date: new Date(),
+          replay: {
+            logs: this.logs,
+            board1: this.board1,
+            board2: this.board2,
+          },
         },
       }),
     );
@@ -409,6 +422,12 @@ export default class AppleGameBoard extends HTMLElement {
   dragEnd() {
     if (!this.playing || !this.dragging) return;
 
+    this.logs.push({
+      pos1: this.pos1,
+      pos2: this.pos2,
+      time: new Date() - this.startTime,
+    });
+
     this.dragging = false;
 
     this.collect();
@@ -421,18 +440,30 @@ export default class AppleGameBoard extends HTMLElement {
   refresh() {
     if (!this.playing || this.refreshUsed) return;
 
-    this.resetApples();
+    this.logs.push({
+      refresh: true,
+      time: new Date() - this.startTime,
+    });
+
+    this.board2 = this.resetApples();
 
     this.refreshUsed = true;
     this.$refresh.setAttribute("disabled", "");
   }
 
   resetApples() {
+    const board = [];
+
     for (const $apple of this.$apples) {
+      const n = Math.floor(Math.random() * 9) + 1;
       $apple.className = "apple";
       const $number = $apple.querySelector("span");
-      $number.textContent = Math.floor(Math.random() * 9) + 1;
+      $number.textContent = n;
+
+      board.push(n);
     }
+
+    return board;
   }
 
   collect() {
