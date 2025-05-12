@@ -5,11 +5,26 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import ReplayModal from "../components/ReplayModal";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { decompressFromEncodedURIComponent } from "lz-string";
+
+const DEMO_REPLAY =
+  "N4IgNg9g5gziBcBtUAHCMCMDEAYA0ArALp4howBM2+AbCSAC4CWAtgKYIYU4UC+eqdFiQZC9clRF46pZu04ECATn6DM2CngAs49JMSbis1h3gUtFFQJAAnNgDM7MABYIGNgK5tj8+AGYcZVUyIWwCPApdSjC8DHo5UwIuLWDyYQNYqP0-TJ9TGhwcP1TQqSMQ6KR8coSEAA4tJRoS9SkZCv1Ndtr4JQw6upb0wyzqaXiTBCaCFPoAIwgAQxsAE3StPAB2PCU8Op28HO2c3dFRGkOtg5zRXc1t7YvtjfCLo+1L-Yv90UfpWMIEQBDyu23CohyGxOgP2d3+3w+XyuFwuUMuf12G32GwuuyROXC2002KBG22d3mS1W2SuokJyP+4Th9wZ4RyF3CZKusIBORJaP2GIBG00Ir2gLOgPZ4rhG1uBzeAPlzyuu1eV2JoIB4KBfxy0p5hkBcMh2iIvCAA";
 
 export default function Landing() {
+  const ref = useRef(null);
   const params = useSearchParams();
   const [replayData, setReplayData] = useState(null);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      const data = JSON.parse(decompressFromEncodedURIComponent(DEMO_REPLAY));
+
+      ref.current.replay(data);
+    }, 2000);
+
+    return () => clearTimeout(timerId);
+  }, []);
 
   useEffect(() => {
     const data = params.get("replay");
@@ -32,12 +47,7 @@ export default function Landing() {
         <section>
           <h2>Demo Replay</h2>
           <h3>“See it in action—watch a short demo.”</h3>
-          <Image
-            src="/demo.png"
-            width={618}
-            height={537}
-            alt="Demo Replay (Mock)"
-          />
+          <apple-game-board ref={ref} />
         </section>
 
         <section>
