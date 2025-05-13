@@ -9,6 +9,8 @@ A responsive and interactive portfolio built with Next.js and React, featuring g
 
 *Replay link starts a recorded session instantly.*
 
+<img width="628" alt="screenshot" src="https://github.com/user-attachments/assets/376abde5-d140-4c5d-8c1a-1fd273eb7138" />
+
 
 ## 📖 Game Rules
 
