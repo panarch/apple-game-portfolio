@@ -9,8 +9,7 @@ A responsive and interactive portfolio built with Next.js and React, featuring g
 
 *Replay link starts a recorded session instantly.*
 
-<img width="628" alt="screenshot" src="https://github.com/user-attachments/assets/376abde5-d140-4c5d-8c1a-1fd273eb7138" />
-
+<img width="949" alt="screenshot2" src="https://github.com/user-attachments/assets/1db097d5-0eb4-4ebe-a6d9-2892ba3704df" />
 
 ## 📖 Game Rules
 
@@ -18,6 +17,8 @@ A responsive and interactive portfolio built with Next.js and React, featuring g
 * **Gameplay**: Each apple contains a number from 1 to 9. Drag and combine apples to total exactly 10.
 * **Objective**: Collect as many apples as possible within 75 seconds.
 * **Refresh**: Once per game, refresh the board strategically.
+
+<img width="628" alt="screenshot" src="https://github.com/user-attachments/assets/376abde5-d140-4c5d-8c1a-1fd273eb7138" />
 
 ## 🚀 Features
 
