@@ -228,6 +228,22 @@ export default class AppleGameBoard extends HTMLElement {
             z-index: 2;
           }
         }
+
+        @media (max-width: 640px) {
+          :host([mode="play"]) .board {
+            --apple-size: calc(var(--board-inner-width) / var(--num-rows));
+
+            transform: translateY(
+                calc(
+                  (var(--num-cols) - var(--num-rows)) / 2 * var(--apple-size)
+                )
+              )
+              rotateZ(90deg);
+            .apple {
+              transform: rotateZ(-90deg);
+            }
+          }
+        }
       </style>
 
       <template id="apple-icon">

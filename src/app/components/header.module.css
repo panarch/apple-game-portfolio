@@ -78,3 +78,7 @@
         }
     }
 }
+
+.header.menuOpen {
+    z-index: 7;
+}

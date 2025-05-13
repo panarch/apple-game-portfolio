@@ -35,7 +35,7 @@ export default function Play() {
       <button className={styles.start} onClick={start}>
         {playing ? "Reset" : "Start"}
       </button>
-      <apple-game-board ref={ref} />
+      <apple-game-board ref={ref} mode="play" />
     </main>
   );
 }

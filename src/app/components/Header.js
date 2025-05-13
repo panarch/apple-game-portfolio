@@ -17,7 +17,9 @@ export default function Header() {
   }
 
   return (
-    <header className={styles.header}>
+    <header
+      className={[styles.header, !navHidden ? styles.menuOpen : ""].join(" ")}
+    >
       <Link href="/" className={styles.title}>
         Apple Game
       </Link>
