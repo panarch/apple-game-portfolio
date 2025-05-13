@@ -249,6 +249,23 @@ export default class AppleGameBoard extends HTMLElement {
             }
           }
         }
+
+        @keyframes shake {
+          10%,
+          30%,
+          50%,
+          70%,
+          90% {
+            transform: translateX(2px);
+          }
+
+          20%,
+          40%,
+          60%,
+          80% {
+            transform: translateX(-2px);
+          }
+        }
       </style>
 
       <template id="apple-icon">
@@ -560,6 +577,18 @@ export default class AppleGameBoard extends HTMLElement {
     } else {
       this.resetApplesForReplay(this.board2);
     }
+
+    const $numbers = this.$board.querySelectorAll(".apple span");
+    for (const $number of $numbers) {
+      $number.style.animationName = "shake";
+      $number.style.animationDuration = "0.3s";
+    }
+
+    setTimeout(() => {
+      for (const $number of $numbers) {
+        $number.style.animationName = "";
+      }
+    }, 400);
 
     this.refreshUsed = true;
     this.$refresh.setAttribute("disabled", "");
