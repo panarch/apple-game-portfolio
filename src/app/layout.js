@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import "./globals.css";
 import { RankingProvider } from "./store";
 import OrientationGuide from "./components/OrientationGuide";
+import { Suspense } from "react";
 
 const galindo = Galindo({
   variable: "--font-galindo",
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={galindo.variable}>
         <Header />
-        <RankingProvider>{children}</RankingProvider>
+        <Suspense>
+          <RankingProvider>{children}</RankingProvider>
+        </Suspense>
         <OrientationGuide />
       </body>
     </html>
