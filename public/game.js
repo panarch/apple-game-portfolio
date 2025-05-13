@@ -239,7 +239,12 @@ export default class AppleGameBoard extends HTMLElement {
                 )
               )
               rotateZ(90deg);
+
             .apple {
+              transform: rotateZ(-90deg);
+            }
+
+            &:not(.playing) .final-score {
               transform: rotateZ(-90deg);
             }
           }
