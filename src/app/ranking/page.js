@@ -33,7 +33,7 @@ export default function Randking() {
               <td>{i + 1}</td>
               <td>{score}</td>
               <td>{dragCount}</td>
-              <td>{dateFmt.format(new Date(date))}</td>
+              <td className={styles.date}>{dateFmt.format(new Date(date))}</td>
               <td>
                 <button onClick={() => setReplayData(replay)}>Show</button>
               </td>

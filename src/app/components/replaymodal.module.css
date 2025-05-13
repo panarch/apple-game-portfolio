@@ -21,6 +21,18 @@
             "board board board";
         grid-template-columns: 1fr max-content max-content;
         gap: 20px;
+
+        @media (max-width: 640px) {
+            border-radius: 5px;
+
+            grid-template-areas:
+                "title title"
+                "board board"
+                "share close";
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            justify-items: center;
+        }
     }
 
     .title {
@@ -29,10 +41,16 @@
 
     .share {
         grid-area: share;
+        @media (max-width: 640px) {
+            justify-self: end;
+        }
     }
 
     .close {
         grid-area: close;
+        @media (max-width: 640px) {
+            justify-self: start;
+        }
     }
 
     button {
@@ -43,6 +61,11 @@
         border: none;
         border-radius: 12px;
         cursor: pointer;
+
+        @media (max-width: 640px) {
+            padding: 10px 15px;
+            width: 100px;
+        }
     }
 
     .board {

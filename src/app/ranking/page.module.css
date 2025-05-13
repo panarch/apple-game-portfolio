@@ -32,6 +32,16 @@
             text-align: center;
         }
 
+        @media (max-width: 640px) {
+            td.date {
+                font-size: 14px;
+            }
+
+            th {
+                padding: 5px 8px;
+            }
+        }
+
         button {
             border: none;
             background-color: var(--color-button-bg);
