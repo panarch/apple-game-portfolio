@@ -11,11 +11,21 @@ const galindo = Galindo({
   weight: "400",
 });
 
+export const metadata = {
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <script src="/game.js" defer type="module"></script>
       </head>
       <body className={galindo.variable}>
