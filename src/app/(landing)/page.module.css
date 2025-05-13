@@ -1,6 +1,6 @@
 .page {
     width: 100%;
-    padding: 10px var(--side-padding);
+    padding: 10px var(--side-padding) 150px var(--side-padding);
 
     display: flex;
     flex-direction: column;

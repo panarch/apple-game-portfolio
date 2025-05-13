@@ -70,6 +70,16 @@ export default function Landing() {
             Once installed, Apple Game opens full-screen and works offline.
           </h3>
         </section>
+
+        <section>
+          <h2>GitHub Repository</h2>
+          <Link
+            href="https://github.com/panarch/apple-game-portfolio"
+            target="_blank"
+          >
+            https://github.com/panarch/apple-game-portfolio
+          </Link>
+        </section>
       </main>
       {replayData && (
         <ReplayModal
