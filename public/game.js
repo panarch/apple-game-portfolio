@@ -230,6 +230,18 @@ export default class AppleGameBoard extends HTMLElement {
         }
 
         @media (max-width: 640px) {
+          :host([mode="play"]) .container {
+            grid-template-areas:
+              "progress refresh score"
+              "board board board";
+            grid-template-columns: 1fr max-content max-content;
+
+            .score,
+            .refresh {
+              transform: rotateZ(90deg);
+            }
+          }
+
           :host([mode="play"]) .board {
             --apple-size: calc(var(--board-inner-width) / var(--num-rows));
 
@@ -239,14 +251,6 @@ export default class AppleGameBoard extends HTMLElement {
                 )
               )
               rotateZ(90deg);
-
-            .apple {
-              transform: rotateZ(-90deg);
-            }
-
-            &:not(.playing) .final-score {
-              transform: rotateZ(-90deg);
-            }
           }
         }
 
